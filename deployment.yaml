@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-101-middleware-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: go-101-middleware
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: go-101-middleware
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: go-101-middleware
+          image: the1bit/go-101-middleware
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - name: http
+              containerPort: 4000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-101-middleware-cip
+spec:
+  selector:
+    app: go-101-middleware
+    tier: backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http
