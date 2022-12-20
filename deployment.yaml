@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: go-101-middleware-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: go-101-middleware
